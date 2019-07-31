@@ -1,6 +1,8 @@
 import { Shape, Point, MoveDirection } from "./types";
 import GameConfig from "./GameConfig";
 import { SquareGroup } from "./SquareGroup";
+import { Square } from "./Square";
+import { exists } from "fs";
 
 function isPoint(obj: any): obj is Point {
     if (typeof obj.x === "undefined") {
@@ -11,7 +13,7 @@ function isPoint(obj: any): obj is Point {
 
 
 export class TerisRule {
-    static canIMove(shape: Shape, targetPoint: Point): boolean {
+    static canIMove(shape: Shape, targetPoint: Point, exists: Square[]): boolean {
         const targetSuarePoints: Point[] = shape.map(it => {
             return {
                 x: it.x + targetPoint.x,
@@ -26,16 +28,18 @@ export class TerisRule {
         })) { 
             return false
         }
-
+        if(targetSuarePoints.some(p => exists.some(sq => sq.point.x === p.x && sq.point.y === p.y))){
+            return false
+        }
         return true
     }
 
-    static move(teris: SquareGroup, targetPoint: Point): boolean;
-    static move(teris: SquareGroup, direction: MoveDirection): boolean;
+    static move(teris: SquareGroup, targetPoint: Point, exists: Square[]): boolean;
+    static move(teris: SquareGroup, direction: MoveDirection, exists: Square[]): boolean;
 
-    static move(teris: SquareGroup, targetPointOrDirection: Point | MoveDirection): boolean {
+    static move(teris: SquareGroup, targetPointOrDirection: Point | MoveDirection, exists: Square[]): boolean {
         if (isPoint(targetPointOrDirection)) {
-            if (this.canIMove(teris.shape, targetPointOrDirection)) {
+            if (this.canIMove(teris.shape, targetPointOrDirection, exists)) {
 
                 teris.centerPoint = targetPointOrDirection
                 return true
@@ -60,7 +64,7 @@ export class TerisRule {
                     y: teris.centerPoint.y,
                 }
             }
-            return this.move(teris, targetPoint)
+            return this.move(teris, targetPoint ,exists)
         }
 
     }
@@ -71,14 +75,14 @@ export class TerisRule {
      * @param teris 
      * @param direction 
      */
-    static moveDirection(teris: SquareGroup, direction: MoveDirection){
-        while(this.move(teris, direction)){
+    static moveDirection(teris: SquareGroup, direction: MoveDirection, exists: Square[]){
+        while(this.move(teris, direction, exists)){
         }
     }
 
-    static rotate(teris: SquareGroup): boolean{
+    static rotate(teris: SquareGroup, exists: Square[]): boolean{
         const newShape = teris.afterRotateshape();
-        if(this.canIMove(newShape, teris.centerPoint)){
+        if(this.canIMove(newShape, teris.centerPoint, exists)){
             teris.rotate();
             return true
         }else{

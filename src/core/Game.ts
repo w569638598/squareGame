@@ -3,6 +3,7 @@ import { SquareGroup } from "./SquareGroup";
 import { createTeris } from "./Taris";
 import { TerisRule } from "./TerisRule";
 import GameConfig from "./GameConfig";
+import { Square } from "./Square";
 
 export class Game{
     private _gameStatus: GameStatus = GameStatus.init;
@@ -10,6 +11,12 @@ export class Game{
     private _nextTeris: SquareGroup = createTeris({x: 0, y: 0});
     private _timer?: number;
     private _duration: number = 1000
+    private _exists: Square[] = []
+
+
+
+
+
 
 constructor(private _viewer: GameViewer){
     this.resetCenterPointer(GameConfig.nextSize.width, this._nextTeris)
@@ -38,23 +45,24 @@ constructor(private _viewer: GameViewer){
 
     control_left(){
         if(this._curTeris && this._gameStatus === GameStatus.playing){
-            TerisRule.move(this._curTeris, MoveDirection.left)
+            TerisRule.move(this._curTeris, MoveDirection.left, this._exists)
         }
     }
     control_right(){
         if(this._curTeris && this._gameStatus === GameStatus.playing){
-            TerisRule.move(this._curTeris, MoveDirection.right)
+            TerisRule.move(this._curTeris, MoveDirection.right, this._exists)
         }
     }
     control_DOWN(){
         if(this._curTeris && this._gameStatus === GameStatus.playing){
-            TerisRule.move(this._curTeris, MoveDirection.down)
+            TerisRule.moveDirection(this._curTeris, MoveDirection.down, this._exists)
+            this.hitBottom()
         }
     }
 
     control_Rotate(){
         if(this._curTeris && this._gameStatus === GameStatus.playing){
-            TerisRule.rotate(this._curTeris)
+            TerisRule.rotate(this._curTeris, this._exists)
         }
     }
 
@@ -64,7 +72,9 @@ constructor(private _viewer: GameViewer){
         }
         this._timer = setInterval(() => {
             if(this._curTeris){
-                TerisRule.move(this._curTeris, MoveDirection.down)
+                if(!TerisRule.move(this._curTeris, MoveDirection.down, this._exists)){
+                    this.hitBottom()
+                }
             }
         },this._duration)
     }
@@ -89,5 +99,10 @@ constructor(private _viewer: GameViewer){
         while(teris.squares.some(it => it.point.y < 0)){
             teris.squares.forEach(a => a.point = {x: a.point.x, y: a.point.y + 1})
         }
+    }
+
+    private hitBottom(){
+        this._exists.push(...this._curTeris!.squares)
+        this.switchTeris()
     }
 }
