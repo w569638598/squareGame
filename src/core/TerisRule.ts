@@ -90,4 +90,51 @@ export class TerisRule {
         }
     }
 
+
+    /**
+     * 从已存在的方块儿中进行消除，并返回消除的行数
+     * @param exists 
+     */
+    static deleteSquares(exists: Square[]): number {
+        const ys = exists.map(sq => sq.point.y);
+        const maxY = Math.max(...ys)
+
+        const minY = Math.min(...ys);
+
+        let num = 0;
+        for (let y = minY; y <= maxY; y++) {
+            if(this.deleteLine(exists, y)){
+                num++;
+            }
+        }
+        return num;
+    }
+
+
+
+    /**
+     * 消除行
+     * @param exists 
+     * @param y 
+     */
+    private static deleteLine(exists: Square[], y: number): boolean{
+        const Squares = exists.filter(sq => sq.point.y === y);
+        if(Squares.length === GameConfig.panelSize.width){
+            Squares.forEach(sq => {
+                if(sq.viewer){
+                    sq.viewer.remove()
+                }
+                exists.filter(s => s.point.y < y).forEach(sq => {
+                    sq.point = {
+                        x: sq.point.x,
+                        y: sq.point.y + 1
+                    }
+                })
+                const index = exists.indexOf(sq)
+                exists.splice(index, 1)
+            })
+            return true
+        }
+        return false
+    }
 }

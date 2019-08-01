@@ -102,7 +102,9 @@ constructor(private _viewer: GameViewer){
     }
 
     private hitBottom(){
-        this._exists.push(...this._curTeris!.squares)
+        this._exists.push(...this._curTeris!.squares);
+        const num = TerisRule.deleteSquares(this._exists);
+        console.log(num)
         this.switchTeris()
     }
 }
