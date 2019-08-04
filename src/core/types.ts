@@ -1,4 +1,6 @@
 import { SquareGroup } from "./SquareGroup";
+import { inherits } from "util";
+import { Game } from "./Game";
 
 export interface Point {
     readonly x: number,
@@ -50,4 +52,16 @@ export interface GameViewer {
      * @param teris     切换的方块儿对象
      */
     switch(teris: SquareGroup): void
+
+
+    init(game: Game): void;
+
+    showScore(score: number): void;
+
+
+    onGamePause(): void;
+
+    onGameStart(): void;
+    
+    onGameOver(): void;
 }

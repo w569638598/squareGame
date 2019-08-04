@@ -122,11 +122,11 @@ export class LineShape extends SquareGroup {
 
 
 export const shapes = [
-    TShape,
+    // TShape,
     LShape,
     LMirrorShape,
-    SShape,
-    SMirrorShape,
+    // SShape,
+    // SMirrorShape,
     SquareShape,
     LineShape
 ]

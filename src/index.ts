@@ -1,6 +1,6 @@
 import { Game } from "./core/Game";
 import { GamePageViewer } from "./core/viewer/GamePageViewer";
-import $ from 'jquery'
+
 
 // import { Square } from "./core/Square";
 // import { SquarePageViewer } from "./core/viewer/squarePageViewer";
@@ -66,31 +66,4 @@ import $ from 'jquery'
 
 
 
-var g = new Game(new GamePageViewer);
-g.start();
-
-
-$("#start").click(function(){
-g.start()
-})
-
-$("#pause").click(function(){
-    g.pause()
-})
-
-$("#down").click(function(){
-    g.control_DOWN()
-})
-
-
-$("#left").click(function(){
-    g.control_left()
-})
-
-$("#right").click(function(){
-    g.control_right()
-})
-
-$("#rotate").click(function(){
-    g.control_Rotate()
-})
+new Game(new GamePageViewer);
