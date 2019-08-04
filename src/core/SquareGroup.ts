@@ -18,16 +18,16 @@ export class SquareGroup {
 
     public set centerPoint(v: Point) {
         this._centerPoint = v;
-this.setSquarePoint();
+        this.setSquarePoint();
     }
 
-    private setSquarePoint(){
+    private setSquarePoint() {
         this._shape.forEach((p, i) => {
             this._squares[i].point = {
                 x: this._centerPoint.x + p.x,
                 y: this._centerPoint.y + p.y
             }
-            
+
         })
     }
 
@@ -48,8 +48,8 @@ this.setSquarePoint();
 
     protected isClock = true;         //旋转方向
 
-    afterRotateshape(): Shape{
-        if(this.isClock){
+    afterRotateshape(): Shape {
+        if (this.isClock) {
             return this._shape.map(p => {
                 const newP: Point = {
                     x: -p.y,
@@ -57,7 +57,7 @@ this.setSquarePoint();
                 }
                 return newP
             })
-        }else{
+        } else {
             return this._shape.map(p => {
                 const newP: Point = {
                     x: p.y,
@@ -69,7 +69,7 @@ this.setSquarePoint();
     }
 
 
-    rotate(){
+    rotate() {
         const newShap = this.afterRotateshape();
         this._shape = newShap;
         this.setSquarePoint();

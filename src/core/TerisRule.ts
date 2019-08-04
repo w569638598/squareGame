@@ -29,7 +29,7 @@ export class TerisRule {
             return false
         }
         result = targetSuarePoints.some(p => exists.some(sq => sq.point.x === p.x && sq.point.y === p.y))
-        if(result){
+        if (result) {
             return false;
         }
         return true

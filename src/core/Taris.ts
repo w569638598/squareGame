@@ -59,9 +59,9 @@ export class SShape extends SquareGroup {
             { x: 0, y: -1 },
         ], _centerPoint, _color)
     }
-    rotate(){
+    rotate() {
         super.rotate();
-        this.isClock =  !this.isClock
+        this.isClock = !this.isClock
     }
 }
 
@@ -77,9 +77,9 @@ export class SMirrorShape extends SquareGroup {
             { x: 1, y: 1 },
         ], _centerPoint, _color)
     }
-    rotate(){
+    rotate() {
         super.rotate();
-        this.isClock =  !this.isClock
+        this.isClock = !this.isClock
     }
 }
 
@@ -95,7 +95,7 @@ export class SquareShape extends SquareGroup {
             { x: 1, y: 1 },
         ], _centerPoint, _color)
     }
-    afterRotateshape(){
+    afterRotateshape() {
         return this.shape
     }
 }
@@ -112,9 +112,9 @@ export class LineShape extends SquareGroup {
             { x: 2, y: 0 },
         ], _centerPoint, _color)
     }
-    rotate(){
+    rotate() {
         super.rotate();
-        this.isClock =  !this.isClock
+        this.isClock = !this.isClock
     }
 }
 

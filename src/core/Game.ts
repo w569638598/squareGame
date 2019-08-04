@@ -15,27 +15,27 @@ export class Game {
 
     private _score: number = 0;
 
-    public get gameStatus(){
+    public get gameStatus() {
         return this._gameStatus
     }
 
-    public get Score(){
+    public get Score() {
         return this._score;
     }
-    public set Score(v){
+    public set Score(v) {
         this._score = v;
         this._viewer.showScore(v);
-        const level = GameConfig.levels.filter(it => it.score  < v).pop()!;
-        if(level.duration === this._duration){
+        const level = GameConfig.levels.filter(it => it.score < v).pop()!;
+        if (level.duration === this._duration) {
             return;
         }
         this._duration = level.duration;
-        if(this._timer){
+        if (this._timer) {
             clearInterval(this._timer)
-        this._timer = undefined;
-        this.autoDrop();
-    }
-        
+            this._timer = undefined;
+            this.autoDrop();
+        }
+
     }
 
     constructor(private _viewer: GameViewer) {

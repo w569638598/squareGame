@@ -8,7 +8,7 @@ export class SquarePageViewer implements IViewer {
     private dom?: JQuery<HTMLElement>
     private isRemove: boolean = false;
     show(): void {
-        if(this.isRemove){
+        if (this.isRemove) {
             return;
         }
         if (!this.dom) {

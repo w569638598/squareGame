@@ -5,7 +5,7 @@ import { SquareGroup } from "../SquareGroup";
 import { Game } from "../Game";
 import GameConfig from "../GameConfig";
 import PageConfig from "./PageConfig";
-export class GamePageViewer implements GameViewer{
+export class GamePageViewer implements GameViewer {
     onGamePause(): void {
         this.msgDom.css({
             display: "flex"
@@ -40,18 +40,18 @@ export class GamePageViewer implements GameViewer{
         })
 
         $(document).keydown(e => {
-            if(e.keyCode === 37){
+            if (e.keyCode === 37) {
                 game.control_left()
-            }else if(e.keyCode === 38){
+            } else if (e.keyCode === 38) {
                 game.control_Rotate()
-            }else if(e.keyCode === 39){
+            } else if (e.keyCode === 39) {
                 game.control_right()
-            }else if(e.keyCode === 40){
+            } else if (e.keyCode === 40) {
                 game.control_DOWN()
-            }else if(e.keyCode === 32){
-                if(game.gameStatus === GameStatus.playing){
+            } else if (e.keyCode === 32) {
+                if (game.gameStatus === GameStatus.playing) {
                     game.pause();
-                }else{
+                } else {
                     game.start();
                 }
             }
@@ -61,7 +61,7 @@ export class GamePageViewer implements GameViewer{
         teris.squares.forEach(sq => {
             sq.viewer = new SquarePageViewer(sq, this.nextDom)
         })
-    }    
+    }
     switch(teris: SquareGroup): void {
         teris.squares.forEach(sq => {
             sq.viewer!.remove()
@@ -69,5 +69,5 @@ export class GamePageViewer implements GameViewer{
         })
     }
 
-    
+
 }

@@ -62,6 +62,6 @@ export interface GameViewer {
     onGamePause(): void;
 
     onGameStart(): void;
-    
+
     onGameOver(): void;
 }
